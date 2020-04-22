@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp" ng-controller="MainCtrl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title ng-bind="header.title"></title>
+    <link rel="shortcut icon" href="assets/img/stackjobs_icon.png" type="image/x-icon">
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+    <script src="bootstrap/js/bootstrap.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <div class="col-md-12 p-2 m-2">
+                <div class="row">
+                    <h2 ng-bind="header.mainTitle"></h2>
+                </div>
+            </div>
+        </header>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 list-inline">
+                <button class="btn btn-block btn-outline-info" ng-repeat="estacion in estaciones track by estacion.eEstacion" ng-click="sendRequest($index)"> {{::estacion.eEstacion}} </button>
+            </div>
+            <div class="col-md-4 list-inline">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>{{data.SendTemporada}}</label>
+                        </div>
+                        <div class="col-md-6">
+                            <img src="{{data.SendIMG}}" alt="" width="250%">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src=" js/angular.min.js "></script>
+    <script>
+        var app = angular.module('myApp', []);
+        var controllerDependency = function($scope) {
+            $scope.header = {};
+            $scope.estaciones = [];
+            $scope.data = {};
+            $scope.header = {
+                title: "Estaciones de Año ",
+                mainTitle: "Busqueda por Estaciones de Año "
+            };
+            $scope.estaciones = [{
+                eEstacion: "Primavera ",
+                eTemporada: "22 de Marzo al 21 de Junio ",
+                eIMG: "assets/img/primavera.jpg"
+            }, {
+                eEstacion: "Verano ",
+                eTemporada: "22 de Junio al 22 de Septiembre ",
+                eIMG: "assets/img/verano.jpg"
+            }, {
+                eEstacion: "Otoño ",
+                eTemporada: "22 de Septiembre al 21 de Diciembre ",
+                eIMG: "assets/img/otono.jpg"
+            }, {
+                eEstacion: "Invierno ",
+                eTemporada: "22 de Diciembre al 21 de Marzo ",
+                eIMG: "assets/img/Invierno.jpg"
+            }];
+
+            $scope.sendRequest = function($index) {
+                if ($index != undefined) {
+                    $scope.data.SendTemporada = $scope.estaciones[$index].eTemporada;
+                    $scope.data.SendIMG = $scope.estaciones[$index].eIMG;
+                }
+            }
+        }
+        controllerDependency.inject = ['$scope'];
+        app.controller('MainCtrl', controllerDependency);
+    </script>
+</body>
+
+</html>
